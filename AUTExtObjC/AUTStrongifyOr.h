@@ -16,18 +16,35 @@
 ///
 /// @endcode
 #define strongifyOr(...) \
-    rac_keywordify \
+    aut_keywordify \
     _Pragma("clang diagnostic push") \
     _Pragma("clang diagnostic ignored \"-Wshadow\"") \
-    metamacro_foreach(rac_strongify_,, __VA_ARGS__) \
+    metamacro_foreach(aut_strongify_,, __VA_ARGS__) \
     _Pragma("clang diagnostic pop") \
-    if (metamacro_foreach(__AUTIsNil,, __VA_ARGS__) false) \
+    if (metamacro_foreach(__AUTIsNotNil,, __VA_ARGS__) true) {} else \
 
 // IMPLEMENTATION DETAILS FOLLOW!
 // Do not write code that depends on anything below this line.
 
-#define __AUTIsNil(INDEX, EXPRESSION) \
-    (EXPRESSION == nil) ||
+#define __AUTIsNotNil(INDEX, EXPRESSION) \
+    (EXPRESSION != nil) &&
 
 #define aut_strongify_(INDEX, VAR) \
     __strong __typeof__(VAR) VAR = metamacro_concat(VAR, _weak_);
+
+// Details about the choice of backing keyword:
+//
+// The use of @try/@catch/@finally can cause the compiler to suppress
+// return-type warnings.
+// The use of @autoreleasepool {} is not optimized away by the compiler,
+// resulting in superfluous creation of autorelease pools.
+//
+// Since neither option is perfect, and with no other alternatives, the
+// compromise is to use @autorelease in DEBUG builds to maintain compiler
+// analysis, and to use @try/@catch otherwise to avoid insertion of unnecessary
+// autorelease pools.
+#if DEBUG
+#define aut_keywordify autoreleasepool {}
+#else
+#define aut_keywordify try {} @catch (...) {}
+#endif
