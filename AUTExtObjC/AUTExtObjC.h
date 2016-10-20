@@ -10,3 +10,4 @@
 #import "AUTNotNil.h"
 #import "AUTStrongifyOr.h"
 #import "AUTUnavailableDesignatedInitializer.h"
+#import "AUTAutoType.h"

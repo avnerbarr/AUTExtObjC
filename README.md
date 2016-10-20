@@ -1,5 +1,19 @@
 # Featuring:
 
+## `let` and `var`
+
+Pretend that you're writing Swift (when you're really writing Objective-C):
+
+```objc
+let value = @"A constant string, with an inferred type of NSString *";
+```
+
+```objc
+var value = @"A string that can be reassigned, with an inferred type of NSString *";
+
+value = @"A new value";
+```
+
 ## `AUTAssertNotNil`
 
 Makes repeated `NSParameterAssert(argument != nil);` boilerplate that much easier :sparkles:.
