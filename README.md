@@ -71,3 +71,12 @@ Reduces boilerplate when opting out of designated initializers.
 ```objc
 - (instancetype)initWithCoder:(NSCoder *)aDecoder AUT_UNAVAILABLE_DESIGNATED_INITIALIZER;
 ```
+
+## `AUTLocalizationNotNeeded()`
+
+Tells the clang analyzer that a string does not need localization if the
+CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED build setting is on.
+
+```objc
+label.text = AUTLocalizationNotNeeded(@"Secret Developer Menu");
+```
