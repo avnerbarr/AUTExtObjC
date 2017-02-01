@@ -12,3 +12,4 @@
 #import "AUTUnavailableDesignatedInitializer.h"
 #import "AUTAutoType.h"
 #import "AUTLocalizationNotNeeded.h"
+#import "AUTDefer.h"
